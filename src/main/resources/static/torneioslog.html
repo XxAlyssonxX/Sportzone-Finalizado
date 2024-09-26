@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Torneios</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/db2.js"></script>
+    <script src="js/modal2.js"></script>
+
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        header .login a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .all-tournaments {
+            display: flex;
+            padding: 40px 20px;
+            background-color: #fff;
+        }
+
+        .filter-section {
+            width: 20%;
+            padding: 20px;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+        }
+
+        .filter-section h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .filter-section label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .filter-section input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .tournament-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+            padding: 20px;
+        }
+
+        .tournament {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            width: 30%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .tournament img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .tournament h3 {
+            margin-top: 10px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .tournament p {
+            margin: 10px 0;
+            color: #777;
+        }
+
+        .tournament .btn {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tournament:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        footer .social-media a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Estilo do modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .modal-content h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff5733;
+            transition: color 0.3s ease;
+        }
+
+        /* Suavização na abertura */
+        .modal.fade-in {
+            display: block;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Estilo para o botão Inscrever-se */
+        .btn-inscricao {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-inscricao:hover {
+            background-color: #218838;
+        }
+        .tit-tor{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			padding: 40px;
+			background-color: white;
+		}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SPORTZONE</div>
+        <nav>
+            <ul>
+                <li><a href="principal.html">Home</a></li>
+                <li><a href="torneioslog.html">Torneios</a></li>
+                <li><a href="inscricao.html">Inscrições</a></li>
+                <li><a href="suporte2.html">Suporte</a></li>
+            </ul>
+        </nav>
+        <div class="login">
+            <a href="usuario.html">Minha Conta</a>
+        </div>
+    </header>
+    
+    <div class="tit-tor"><h1>TORNEIOS</h1></div>
+    
+
+    <section class="all-tournaments">
+        <div class="filter-section">
+            <h3>Filtrar por Modalidades</h3>
+            <label><input type="checkbox" class="filter-class" value="basquete"> Basquete</label>
+            <label><input type="checkbox" class="filter-class" value="futebol"> Futebol</label>
+            <label><input type="checkbox" class="filter-class" value="volei"> Vôlei</label>
+        </div>
+        
+        <div class="tournament-grid">
+            <!-- Torneios serão renderizados aqui -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Site de Torneios de Esportes. Todos os direitos reservados.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Informações do Torneio</h2>
+            <p id="tournament-info">Clique em um torneio para ver as informações.</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            function buscarTorneios(classes = []) {
+                $.ajax({
+                    url: "http://localhost:8080/Torneio/",
+                    method: "GET",
+                    success: function(data) {
+                        renderizarTorneios(data, classes);
+                    },
+                    error: function() {
+                        alert("Erro ao carregar os torneios.");
+                    }
+                });
+            }
+
+            function renderizarTorneios(torneios, classes = []) {
+                const container = $('.tournament-grid');
+                container.empty();
+
+                const torneiosFiltrados = classes.length === 0 ? torneios : torneios.filter(torneio => classes.includes(torneio.classe));
+
+                torneiosFiltrados.forEach(torneio => {
+                    const torneioDiv = $(`
+                        <div class="tournament">
+                            <img src="${torneio.imagem}" alt="${torneio.nome}">
+                            <h3>${torneio.nome}</h3>
+                            <p>Data: ${torneio.data}</p>
+                            <p>Taxa: ${torneio.taxa}</p>
+                            <a href="#" class="btn">Mais Informações</a>
+                        </div>
+                    `);
+                    
+                    torneioDiv.find('.btn').data('torneio', torneio);
+                    container.append(torneioDiv);
+                });
+            }
+
+            $('.filter-class').on('change', function() {
+                const classesSelecionadas = $('.filter-class:checked').map(function() {
+                    return $(this).val();
+                }).get();
+
+                buscarTorneios(classesSelecionadas);
+            });
+
+            buscarTorneios();
+        });
+    </script>
+</body>
+</html>

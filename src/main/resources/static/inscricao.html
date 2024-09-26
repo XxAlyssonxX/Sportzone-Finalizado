@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Inscrições</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        img{
+			max-width: 260px;
+		}
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        header .login a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        /* Conteúdo principal */
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        #inscricoes-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .torneio-card {
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .torneio-card h2 {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .torneio-card p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .torneio-card:hover {
+            transform: translateY(-5px);
+        }
+
+html, body {
+	    height: 100%;
+	    margin: 0;
+	    display: flex;
+	    flex-direction: column;
+	}
+	
+	/* Rodapé fixado no final da página */
+	footer {
+	    background-color: #333;
+	    color: #fff;
+	    text-align: center;
+	    padding: 20px 0;
+	    margin-top: auto;
+	    width: 100%;
+	}
+        /* Rodapé */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer .social-media a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">SPORTZONE</div>
+        <nav>
+            <ul>
+                <li><a href="principal.html">Home</a></li>
+                <li><a href="torneioslog.html">Torneios</a></li>
+                <li><a href="inscricao.html">Inscrições</a></li>
+                <li><a href="suporte2.html">Suporte</a></li>
+            </ul>
+        </nav>
+        <div class="login">
+            <a href="principal.html">Voltar</a>
+        </div>
+    </header>
+
+    <!-- Conteúdo -->
+    <h1>Meus Torneios Inscritos</h1>
+    <div id="inscricoes-container">
+        <!-- Inscrições serão renderizadas aqui -->
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Site de Torneios de Esportes. Todos os direitos reservados.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+        </div>
+    </footer>
+
+    <script>
+        const participanteId = 1;  // Id do participante logado
+
+        window.onload = function() {
+            fetch(`/inscricao/minhas-inscricoes?participanteId=${participanteId}`)
+            .then(response => response.json())
+            .then(data => {
+                const inscricoesContainer = document.getElementById("inscricoes-container");
+
+                if (data.length === 0) {
+                    inscricoesContainer.innerHTML = "<p>Você ainda não está inscrito em nenhum torneio.</p>";
+                } else {
+                    data.forEach(inscricao => {
+                        const torneioDiv = document.createElement("div");
+                        torneioDiv.classList.add("torneio-card");
+                        torneioDiv.innerHTML = `
+                        	<img src="${inscricao.torneio.imagem}">
+                            <h2>${inscricao.torneio.nome}</h2>
+                            <p>Data: ${inscricao.torneio.data}</p>
+                            <p>Taxa: ${inscricao.torneio.taxa}</p>
+                        `;
+                        inscricoesContainer.appendChild(torneioDiv);
+                    });
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+        };
+    </script>
+
+</body>
+</html>

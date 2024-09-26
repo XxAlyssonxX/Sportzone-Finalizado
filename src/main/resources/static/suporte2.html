@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Suporte</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Define a altura total da página e usa flexbox para alinhar os elementos */
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-left: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        header .login a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        /* Banner Principal */
+        .banner {
+            background-color: #333;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .banner h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .contact-section {
+            flex: 1; /* Faz o conteúdo ocupar o espaço restante */
+            padding: 40px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        form button {
+            background-color: #ff5733;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #e14e29;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        footer .social-media a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">SPORTZONE</div>
+        <nav>
+            <ul>
+                <li><a href="principal.html">Home</a></li>
+                <li><a href="torneioslog.html">Torneios</a></li>
+                <li><a href="inscricao.html">Inscrições</a></li>
+                <li><a href="suporte2.html">Suporte</a></li>
+            </ul>
+        </nav>
+        <div class="login">
+            <a href="usuario.html">Minha Conta</a>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner">
+        <h1>Fale com o Suporte</h1>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section class="contact-section">
+        <h2>Entre em contato conosco</h2>
+        <form id="contactForm">
+            <input type="text" id="name" name="name" placeholder="Seu Nome" required>
+            <input type="email" id="email" name="email" placeholder="Seu Email" required>
+            <textarea id="message" name="message" rows="5" placeholder="Sua Mensagem" required></textarea>
+            <button type="submit">Enviar Mensagem</button>
+        </form>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Site de Torneios de Esportes. Todos os direitos reservados.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- Script para submissão do formulário -->
+    <script>
+        $("#contactForm").on("submit", function (e) {
+            e.preventDefault();
+            alert("Mensagem enviada com sucesso!");
+            // Aqui você pode adicionar a lógica de envio para o backend via AJAX
+        });
+    </script>
+</body>
+</html>
